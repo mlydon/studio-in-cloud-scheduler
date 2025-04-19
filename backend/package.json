@@ -12,7 +12,8 @@
     "test": "jest",
     "test:health": "ts-node src/server.ts",
     "test:setup": "npm run prisma:generate && npx ts-node src/test-db.ts",
-    "populate": "ts-node src/scripts/populateStudios.ts"
+    "populate": "ts-node src/scripts/populateStudios.ts",
+    "populate-crews": "ts-node src/scripts/populateCrews.ts"
   },
   "keywords": ["studio", "scheduling", "backend"],
   "author": "",

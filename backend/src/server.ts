@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { PrismaClient } from '@prisma/client';
 import studioRoutes from './routes/studioRoutes';
+import crewRoutes from './routes/crewRoutes';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.get('/api/health', (req, res) => {
 
 // Studio routes
 app.use('/api/studios', studioRoutes);
+app.use('/api/crews', crewRoutes);
 
 // Start server
 const server = app.listen(PORT, () => {

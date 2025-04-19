@@ -4,44 +4,76 @@ const prisma = new PrismaClient();
 
 const studios = [
   {
-    name: "New York Studio",
-    continent: "North America",
+    name: "Dublin Studio",
+    continent: "Europe",
     capacity: 5,
     equipment: ["4K Cameras", "Lighting Kit", "Green Screen", "Sound Booth"],
-    address: "123 Broadway, New York, NY 10001",
-    timezone: "America/New_York"
+    address: "Dublin, Ireland",
+    timezone: "Europe/Dublin"
   },
   {
     name: "London Studio",
     continent: "Europe",
-    capacity: 4,
+    capacity: 6,
     equipment: ["Cinema Cameras", "Professional Lighting", "Sound Booth", "Teleprompter"],
-    address: "45 Oxford Street, London W1D 2DZ",
+    address: "London, England",
     timezone: "Europe/London"
   },
   {
-    name: "Tokyo Studio",
-    continent: "Asia",
-    capacity: 6,
-    equipment: ["8K Cameras", "Advanced Lighting", "Virtual Set", "Audio Mixing"],
-    address: "1-1-1 Marunouchi, Chiyoda-ku, Tokyo 100-0005",
-    timezone: "Asia/Tokyo"
+    name: "Mountain View Studio",
+    continent: "North America",
+    capacity: 5,
+    equipment: ["4K Cameras", "Virtual Set", "LED Walls", "Audio Mixing"],
+    address: "Mountain View, CA",
+    timezone: "America/Los_Angeles"
   },
   {
-    name: "Sydney Studio",
-    continent: "Australia",
+    name: "New York Studio",
+    continent: "North America",
+    capacity: 6,
+    equipment: ["4K Cameras", "Lighting Kit", "Green Screen", "Sound Booth"],
+    address: "New York, NY",
+    timezone: "America/New_York"
+  },
+  {
+    name: "Sao Paulo Studio",
+    continent: "South America",
+    capacity: 5,
+    equipment: ["4K Cameras", "Professional Lighting", "Sound Stage", "Audio Recording"],
+    address: "Sao Paulo, Brazil",
+    timezone: "America/Sao_Paulo"
+  },
+  {
+    name: "Graz Studio",
+    continent: "Europe",
     capacity: 4,
-    equipment: ["4K Cameras", "Natural Lighting", "Outdoor Set", "Audio Recording"],
-    address: "1 Darling Island Road, Pyrmont NSW 2009",
-    timezone: "Australia/Sydney"
+    equipment: ["4K Cameras", "Natural Lighting", "Sound Booth", "Virtual Set"],
+    address: "Graz, Austria",
+    timezone: "Europe/Vienna"
   },
   {
     name: "Dubai Studio",
     continent: "Asia",
     capacity: 5,
     equipment: ["4K Cameras", "LED Walls", "Virtual Production", "Sound Stage"],
-    address: "Dubai Studio City, Dubai, UAE",
+    address: "Dubai, UAE",
     timezone: "Asia/Dubai"
+  },
+  {
+    name: "Bangalore Studio",
+    continent: "Asia",
+    capacity: 5,
+    equipment: ["4K Cameras", "Professional Lighting", "Sound Booth", "Virtual Set"],
+    address: "Bangalore, India",
+    timezone: "Asia/Kolkata"
+  },
+  {
+    name: "Tokyo Studio",
+    continent: "Asia",
+    capacity: 6,
+    equipment: ["8K Cameras", "Advanced Lighting", "Virtual Set", "Audio Mixing"],
+    address: "Tokyo, Japan",
+    timezone: "Asia/Tokyo"
   }
 ];
 

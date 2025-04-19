@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Building2, Globe, Camera, Plus } from 'lucide-react';
 import StudioForm from '../components/StudioForm';
+import WorldMapBackground from '../components/WorldMapBackground';
 
 interface Studio {
   id: number;
@@ -53,56 +54,59 @@ const StudioDashboard: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Studio Dashboard</h1>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="flex items-center px-4 py-2 bg-studio-primary text-white rounded-md hover:bg-studio-primary/90"
-        >
-          <Plus className="mr-2" size={20} />
-          {showForm ? 'Cancel' : 'Add Studio'}
-        </button>
-      </div>
-
-      {showForm && (
-        <div className="mb-8">
-          <StudioForm onSubmit={handleAddStudio} />
-        </div>
-      )}
-
-      <div className="grid md:grid-cols-2 gap-6">
-        {studios.map(studio => (
-          <div 
-            key={studio.id} 
-            className="bg-white shadow-md rounded-lg p-6 hover:shadow-xl transition"
+    <div className="relative min-h-screen bg-gray-50">
+      <WorldMapBackground />
+      <div className="container mx-auto px-4 py-6 relative">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold text-gray-800">Studio Dashboard</h1>
+          <button
+            onClick={() => setShowForm(!showForm)}
+            className="flex items-center px-3 py-1.5 bg-studio-primary text-white rounded-md hover:bg-studio-primary/90 text-sm shadow-sm"
           >
-            <div className="flex justify-between items-center mb-4">
-              <Building2 className="text-studio-primary" size={32} />
-              <div className="flex items-center text-gray-500">
-                <Globe className="mr-2" size={16} />
-                {studio.continent}
+            <Plus className="mr-1" size={16} />
+            {showForm ? 'Cancel' : 'Add Studio'}
+          </button>
+        </div>
+
+        {showForm && (
+          <div className="mb-6">
+            <StudioForm onSubmit={handleAddStudio} />
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {studios.map(studio => (
+            <div 
+              key={studio.id} 
+              className="bg-white/90 backdrop-blur-sm shadow-sm rounded-lg p-4 hover:shadow-md transition text-sm border border-gray-100"
+            >
+              <div className="flex justify-between items-center mb-2">
+                <Building2 className="text-studio-primary" size={24} />
+                <div className="flex items-center text-gray-500 text-xs">
+                  <Globe className="mr-1" size={14} />
+                  {studio.continent}
+                </div>
+              </div>
+              <h2 className="text-lg font-semibold mb-1 text-gray-800">{studio.name}</h2>
+              <div className="flex items-center mb-1 text-xs text-gray-600">
+                <Camera className="mr-1" size={14} />
+                <span>Capacity: {studio.capacity}</span>
+              </div>
+              <div className="mb-2 text-xs text-gray-500">
+                <p>{studio.address}</p>
+                <p>{studio.timezone}</p>
+              </div>
+              <div>
+                <h3 className="font-medium text-xs mb-1 text-gray-700">Equipment:</h3>
+                <ul className="text-xs text-gray-500">
+                  {studio.equipment.map((item, index) => (
+                    <li key={index} className="truncate">{item}</li>
+                  ))}
+                </ul>
               </div>
             </div>
-            <h2 className="text-xl font-semibold mb-2">{studio.name}</h2>
-            <div className="flex items-center mb-2">
-              <Camera className="mr-2 text-gray-600" size={16} />
-              <span>Capacity: {studio.capacity}</span>
-            </div>
-            <div className="mb-2">
-              <p className="text-sm text-gray-500">Address: {studio.address}</p>
-              <p className="text-sm text-gray-500">Timezone: {studio.timezone}</p>
-            </div>
-            <div>
-              <h3 className="font-medium mb-1">Equipment:</h3>
-              <ul className="text-sm text-gray-500">
-                {studio.equipment.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
