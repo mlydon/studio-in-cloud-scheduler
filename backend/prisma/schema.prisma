@@ -1,0 +1,87 @@
+// Database provider (PostgreSQL recommended)
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Prisma client generator
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Studio Model
+model Studio {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  continent   String
+  capacity    Int
+  equipment   String[]
+  address     String?
+  timezone    String
+  bookings    Booking[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// Crew Model
+model Crew {
+  id             Int       @id @default(autoincrement())
+  name           String    @unique
+  specialization String
+  members        Int
+  leadName       String
+  leadEmail      String?
+  bookings       Booking[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+// Booking Model
+model Booking {
+  id         Int      @id @default(autoincrement())
+  studioId   Int
+  studio     Studio   @relation(fields: [studioId], references: [id])
+  crewId     Int
+  crew       Crew     @relation(fields: [crewId], references: [id])
+  
+  date       DateTime
+  startTime  DateTime
+  endTime    DateTime
+  
+  project    String
+  status     BookingStatus @default(SCHEDULED)
+  
+  equipment  String[]  // Specific equipment used in this booking
+  notes      String?
+  
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+// User Model for Authentication
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  firstName String?
+  lastName  String?
+  role      UserRole @default(MEMBER)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Enums for type safety
+enum BookingStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  MEMBER
+  VIEWER
+}
