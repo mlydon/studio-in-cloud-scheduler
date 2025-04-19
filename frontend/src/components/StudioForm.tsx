@@ -1,153 +1,83 @@
-import React, { useState } from 'react';
-import { Building2, Globe, Camera, MapPin, Clock } from 'lucide-react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { studioSchema } from '../schemas/studioSchema';
+import { z } from 'zod';
+
+type StudioFormData = z.infer<typeof studioSchema>;
 
 interface StudioFormProps {
-  onSubmit: (studio: {
-    name: string;
-    continent: string;
-    capacity: number;
-    equipment: string[];
-    address: string;
-    timezone: string;
-  }) => void;
+  onSubmit: (data: StudioFormData) => void;
 }
 
 const StudioForm: React.FC<StudioFormProps> = ({ onSubmit }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    continent: '',
-    capacity: 1,
-    equipment: [''],
-    address: '',
-    timezone: ''
+  const { register, handleSubmit, formState: { errors } } = useForm<StudioFormData>({
+    resolver: zodResolver(studioSchema)
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleEquipmentChange = (index: number, value: string) => {
-    const newEquipment = [...formData.equipment];
-    newEquipment[index] = value;
-    setFormData(prev => ({ ...prev, equipment: newEquipment }));
-  };
-
-  const addEquipmentField = () => {
-    setFormData(prev => ({ ...prev, equipment: [...prev.equipment, ''] }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Add New Studio</h2>
-      
-      <div className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium mb-1">Studio Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Continent</label>
-          <select
-            name="continent"
-            value={formData.continent}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          >
-            <option value="">Select a continent</option>
-            <option value="North America">North America</option>
-            <option value="South America">South America</option>
-            <option value="Europe">Europe</option>
-            <option value="Asia">Asia</option>
-            <option value="Africa">Africa</option>
-            <option value="Australia">Australia</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Capacity</label>
-          <input
-            type="number"
-            name="capacity"
-            value={formData.capacity}
-            onChange={handleChange}
-            min="1"
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Address</label>
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Timezone</label>
-          <input
-            type="text"
-            name="timezone"
-            value={formData.timezone}
-            onChange={handleChange}
-            placeholder="e.g., America/New_York"
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Equipment</label>
-          {formData.equipment.map((item, index) => (
-            <div key={index} className="mb-2">
-              <input
-                type="text"
-                value={item}
-                onChange={(e) => handleEquipmentChange(index, e.target.value)}
-                className="w-full p-2 border rounded"
-                placeholder="Enter equipment item"
-                required
-              />
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={addEquipmentField}
-            className="mt-2 px-3 py-1 bg-blue-100 text-blue-700 rounded"
-          >
-            Add Equipment
-          </button>
-        </div>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Studio Name</label>
+        <input
+          {...register('name')}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-studio-primary focus:ring-studio-primary"
+        />
+        {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name.message?.toString()}</p>}
       </div>
 
-      <div className="mt-6">
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Add Studio
-        </button>
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Continent</label>
+        <input
+          {...register('continent')}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-studio-primary focus:ring-studio-primary"
+        />
+        {errors.continent && <p className="mt-1 text-sm text-red-600">{errors.continent.message?.toString()}</p>}
       </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Capacity</label>
+        <input
+          type="number"
+          {...register('capacity', { valueAsNumber: true })}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-studio-primary focus:ring-studio-primary"
+        />
+        {errors.capacity && <p className="mt-1 text-sm text-red-600">{errors.capacity.message?.toString()}</p>}
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Address</label>
+        <input
+          {...register('address')}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-studio-primary focus:ring-studio-primary"
+        />
+        {errors.address && <p className="mt-1 text-sm text-red-600">{errors.address.message?.toString()}</p>}
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Timezone</label>
+        <input
+          {...register('timezone')}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-studio-primary focus:ring-studio-primary"
+        />
+        {errors.timezone && <p className="mt-1 text-sm text-red-600">{errors.timezone.message?.toString()}</p>}
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Equipment</label>
+        <input
+          {...register('equipment')}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-studio-primary focus:ring-studio-primary"
+        />
+        {errors.equipment && <p className="mt-1 text-sm text-red-600">{errors.equipment.message?.toString()}</p>}
+      </div>
+
+      <button
+        type="submit"
+        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-studio-primary hover:bg-studio-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-studio-primary"
+      >
+        Add Studio
+      </button>
     </form>
   );
 };
