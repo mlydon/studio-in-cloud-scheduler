@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/studio-in-cloud-scheduler/static/css/main.74059774.css",
+    "main.js": "/studio-in-cloud-scheduler/static/js/main.78f88263.js",
+    "static/js/453.947110ef.chunk.js": "/studio-in-cloud-scheduler/static/js/453.947110ef.chunk.js",
+    "index.html": "/studio-in-cloud-scheduler/index.html",
+    "main.74059774.css.map": "/studio-in-cloud-scheduler/static/css/main.74059774.css.map",
+    "main.78f88263.js.map": "/studio-in-cloud-scheduler/static/js/main.78f88263.js.map",
+    "453.947110ef.chunk.js.map": "/studio-in-cloud-scheduler/static/js/453.947110ef.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.74059774.css",
+    "static/js/main.78f88263.js"
+  ]
+}
