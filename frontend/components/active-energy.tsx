@@ -32,8 +32,10 @@ export function ActiveEnergy() {
     const animationDuration = 1000 // ms
     const startTime = performance.now()
 
-    function drawChart(progress: number) {
-      ctx.clearRect(0, 0, rect.width, rect.height)
+  function drawChart(progress: number) {
+  if (!ctx) return; // Add this null check
+  ctx.clearRect(0, 0, rect.width, rect.height)  
+   
 
       // Draw average text
       ctx.font = "bold 24px Arial"

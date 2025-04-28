@@ -35,8 +35,12 @@ export function ActivityRings() {
     const animationDuration = 1000 // ms
     const startTime = performance.now()
 
-    function drawRings(progress: number) {
-      ctx.clearRect(0, 0, rect.width, rect.height)
+function drawRings(progress: number) {
+  if (!ctx) return; // Add this null check
+  ctx.clearRect(0, 0, rect.width, rect.height)
+  // ...
+}
+
 
       // Draw rings from outside to inside
       rings.forEach((ring, index) => {
@@ -51,7 +55,19 @@ export function ActivityRings() {
         ctx.stroke()
 
         // Progress ring with animation
-        const currentProgress = ring.progress * progress
+   	function drawRings(progress: number) {
+  if (!ctx) return;
+  ctx.clearRect(0, 0, rect.width, rect.height)
+
+  // Draw rings from outside to inside
+  rings.forEach((ring, index) => {
+    // ... existing code ...
+    
+    // Progress ring with animation
+    const currentProgress = ring.progress * progress  // This is where the error is
+    // ... rest of the code ...
+  });
+} 
         const startAngle = -Math.PI / 2 // Start from top
         const endAngle = startAngle + currentProgress * Math.PI * 2
 
